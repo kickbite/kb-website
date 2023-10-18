@@ -1,0 +1,62 @@
+/* additional styling for slider */
+
+.noUi-horizontal {
+  height: 0.5rem !important;
+}
+
+.noUi-target {
+  background: #e3e4e8 !important;
+  border-radius: 1.25rem !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.noUi-connects {
+  border-radius: 1.25rem !important;
+}
+
+.noUi-connect {
+  background: #fb8c31 !important;
+}
+
+/* slider handle */
+
+.noUi-horizontal .noUi-handle {
+  width: 155px;
+  top: -10px;
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.noUi-handle {
+  border-radius: 20px;
+  background-image: url("https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/64d357f16ba1878a9affefed_monthly-btn.svg");
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+}
+
+.noUi-handle:before,
+.noUi-handle:after {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .noUi-horizontal .noUi-handle {
+    width: 77px;
+    height: 60px;
+    top: -26px;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+  .noUi-handle {
+    border-radius: 20px;
+    background-image: url("https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/64d4d73e88143c950739b4da_pill-mob.svg");
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+  }
+}
