@@ -1,23 +1,23 @@
 // Object mapping of slider values to corresponding monthly amounts
 const sliderMappingMonthly = {
-  "30": 450,
-  "60": 600,
-  "100": 750,
-  "200": 1000,
-  "400": 1500,
-  "800": 2000,
-  "810": "Get a quote"
+  30: 450,
+  60: 600,
+  100: 750,
+  200: 1000,
+  400: 1500,
+  800: 2000,
+  810: "Get a quote",
 };
 
 // Object mapping of slider values to corresponding annual amounts
 const sliderMappingAnnually = {
-  "30": 405,
-  "60": 540,
-  "100": 675,
-  "200": 900,
-  "400": 1350,
-  "800": 1800,
-  "810": "Get a quote"
+  30: 405,
+  60: 540,
+  100: 675,
+  200: 900,
+  400: 1350,
+  800: 1800,
+  810: "Get a quote",
 };
 
 // Object mapping of cost value to corresponding savings
@@ -33,7 +33,7 @@ const savingTable = {
   1350: 11150,
   1500: 11000,
   1800: 10700,
-  2000: 10500
+  2000: 10500,
 };
 
 let initialDisplays = [];
@@ -62,8 +62,8 @@ const createSlider = (sliderElement, start, map1, map2) => {
       "80%": 400,
       "95%": 800,
       "100%": 810,
-      max: 810
-    }
+      max: 810,
+    },
   });
 
   sliderElement.noUiSlider.on("update", function (values, handle) {
@@ -77,18 +77,13 @@ const createSlider = (sliderElement, start, map1, map2) => {
     if (sliderValue === 810) {
       elems.forEach((elem) => (elem.style.display = "none"));
     } else {
-      elems.forEach(
-        (elem, index) => (elem.style.display = initialDisplays[index])
-      );
+      elems.forEach((elem, index) => (elem.style.display = initialDisplays[index]));
     }
 
     let value = Math.round(values[handle]);
     $(`#${sliderElement.id}-val`).text(value);
 
-    if (
-      map1.hasOwnProperty(value.toString()) &&
-      map2.hasOwnProperty(value.toString())
-    ) {
+    if (map1.hasOwnProperty(value.toString()) && map2.hasOwnProperty(value.toString())) {
       let calculatedValue1 = map1[value.toString()];
       let calculatedValue2 = map2[value.toString()];
       $(`#calculated-${sliderElement.id}-monthly`).text(calculatedValue1);
@@ -97,23 +92,15 @@ const createSlider = (sliderElement, start, map1, map2) => {
       let costValueMonthly = calculatedValue1 / (value * 1000);
       let costValueAnnually = calculatedValue2 / (value * 1000);
 
-      $(`#cost-${sliderElement.id}-monthly`).text(
-        isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(3)
-      );
-      $(`#cost-${sliderElement.id}-annually`).text(
-        isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(3)
-      );
+      $(`#cost-${sliderElement.id}-monthly`).text(isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(3));
+      $(`#cost-${sliderElement.id}-annually`).text(isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(3));
 
       let tabs = $("[data-box='slider-tab']");
       let activeTabIndex = tabs.index(tabs.filter(".is-active"));
       let sliderValue = Number($(`#${sliderElement.id}-val`).text()) * 1000;
 
-      let calculatedValue1Numeric = isNaN(calculatedValue1)
-        ? null
-        : Number(calculatedValue1);
-      let calculatedValue2Numeric = isNaN(calculatedValue2)
-        ? null
-        : Number(calculatedValue2);
+      let calculatedValue1Numeric = isNaN(calculatedValue1) ? null : Number(calculatedValue1);
+      let calculatedValue2Numeric = isNaN(calculatedValue2) ? null : Number(calculatedValue2);
 
       let savingsValue;
       if (savingTable.hasOwnProperty(calculatedValue1Numeric)) {
@@ -128,17 +115,13 @@ const createSlider = (sliderElement, start, map1, map2) => {
         $("#picked").text(monthValue);
 
         let sessionCostMonthly = Number(monthValue) / sliderValue;
-        $("#cost-session").text(
-          isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(3)
-        );
+        $("#cost-session").text(isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(3));
       } else if (activeTabIndex === 1) {
         // Annually tab
         let yearValue = $("#calculated-slider-annually").text();
         $("#picked").text(yearValue);
         let sessionCostAnnually = Number(yearValue) / sliderValue;
-        $("#cost-session").text(
-          isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(3)
-        );
+        $("#cost-session").text(isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(3));
       }
     }
     let displayValue = value === 810 ? "upto 50Mio" : value;
@@ -183,9 +166,7 @@ $("[data-box='slider-tab']").on("click", function () {
   const indicator = $(this).find("[data-role='indicator']")[0];
   indicator.innerHTML = iconActive;
   updateSliderValues();
-  const activeTabIndex = $("[data-box='slider-tab']").index(
-    $(this).addClass("is-active")
-  );
+  const activeTabIndex = $("[data-box='slider-tab']").index($(this).addClass("is-active"));
   const sliderValue = Math.round(slider.noUiSlider.get());
   calculateAndDisplaySavings(activeTabIndex, sliderValue);
 });
@@ -208,9 +189,7 @@ function formatNumberWithDots(n) {
 // Function to calculate and display savings
 function calculateAndDisplaySavings(activeTabIndex, sliderValue) {
   let map = activeTabIndex === 0 ? sliderMappingMonthly : sliderMappingAnnually;
-  let calculatedValue = map.hasOwnProperty(sliderValue.toString())
-    ? map[sliderValue.toString()]
-    : null;
+  let calculatedValue = map.hasOwnProperty(sliderValue.toString()) ? map[sliderValue.toString()] : null;
   if (!isNaN(calculatedValue)) {
     let savingsValue = savingTable[calculatedValue];
     $("[data-slider='value']").text("Start 14-Day Trial");
@@ -218,9 +197,7 @@ function calculateAndDisplaySavings(activeTabIndex, sliderValue) {
     $("[data-link='slider']").attr("href", "/get-a-demo"); // set default link if not set already
     $("[data-link='slider']").removeAttr("data-modifier"); // remove the data-modifier attribute
 
-    let formattedSavingsValue = savingsValue
-      ? formatNumberWithDots(savingsValue)
-      : "-";
+    let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
     $("#savings").text(formattedSavingsValue);
   } else if (calculatedValue === "Get a quote") {
     let savingsValue = Object.values(savingTable).pop();
@@ -230,10 +207,10 @@ function calculateAndDisplaySavings(activeTabIndex, sliderValue) {
     $("[data-link='slider']").attr("href", "/get-a-demo"); // set href to "/get-a-demo"
     $("[data-link='slider']").attr("data-modifier", "true"); // set data-modifier to true
 
-    let formattedSavingsValue = savingsValue
-      ? formatNumberWithDots(savingsValue)
-      : "-";
+    let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
     $("#savings").text(formattedSavingsValue);
     toggleContentVisibilityBasedOnClick();
   }
 }
+
+// linked to netlify at 19/10

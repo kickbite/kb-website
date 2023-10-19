@@ -102,8 +102,7 @@ $(document).ready(function () {
   var $emoji = $("[data-banner='emoji']");
 
   $checkboxes.change(function () {
-    var allChecked =
-      $checkboxes.length === $checkboxes.filter(":checked").length;
+    var allChecked = $checkboxes.length === $checkboxes.filter(":checked").length;
 
     $item.toggleClass("yes", allChecked);
     $message.css("color", allChecked ? "#115921" : "");
@@ -153,8 +152,7 @@ let animation = lottie.loadAnimation({
   renderer: "svg",
   loop: false,
   autoplay: true,
-  path:
-    "https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/65017300f255dded9f361605_new-confident.json"
+  path: "https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/65017300f255dded9f361605_new-confident.json",
 });
 
 animation.addEventListener("complete", function () {
@@ -165,8 +163,7 @@ let animation2 = lottie.loadAnimation({
   renderer: "svg",
   loop: false,
   autoplay: true,
-  path:
-    "https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/64fada86628acf6135862dbb_get-a-demo-no-button.json"
+  path: "https://uploads-ssl.webflow.com/64b8df09204bfb1667ac9c4e/64fada86628acf6135862dbb_get-a-demo-no-button.json",
 });
 
 animation2.addEventListener("complete", function () {
@@ -180,3 +177,4 @@ $(document).ready(function () {
 });
 
 // transferred to webflow at 14/09 15:00
+// linked to netlify at 19/10

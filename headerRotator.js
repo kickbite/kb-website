@@ -2,10 +2,8 @@ $.extend($.easing, {
   lessBouncy: function (x, t, b, c, d) {
     var ts = (t /= d) * t;
     var tc = ts * t;
-    return (
-      b + c * (33 * tc * ts + -106 * ts * ts + 126 * tc + -67 * ts + 15 * t)
-    );
-  }
+    return b + c * (33 * tc * ts + -106 * ts * ts + 126 * tc + -67 * ts + 15 * t);
+  },
 });
 $(".rotator").css("opacity", 0);
 $(document).ready(function () {
@@ -35,17 +33,10 @@ $(document).ready(function () {
 
     $(".rotator").css("width", nextItem.outerWidth());
     nextItem.css("top", "100%");
-    currentItem.animate(
-      { top: "-100%", opacity: 0 },
-      2000,
-      "lessBouncy",
-      function () {
-        $(this).css("opacity", 0);
-      }
-    );
-    nextItem
-      .css("opacity", 0)
-      .animate({ top: "0", opacity: 1 }, cycleTimeInterval, "lessBouncy");
+    currentItem.animate({ top: "-100%", opacity: 0 }, 2000, "lessBouncy", function () {
+      $(this).css("opacity", 0);
+    });
+    nextItem.css("opacity", 0).animate({ top: "0", opacity: 1 }, cycleTimeInterval, "lessBouncy");
     index++;
     if (index > itemAmt - 1) {
       index = 0;
@@ -68,3 +59,4 @@ $(document).ready(function () {
 });
 
 // transferred to Webflow 14/09 15:00
+// linked to netlify at 19/10
