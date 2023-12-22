@@ -5,9 +5,9 @@ blocks.forEach((block, index) => {
   let observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        gsap.to(headers[index], { duration: 0.2, marginBottom: "36rem" });
+        gsap.to(headers[index], { onComplete: () => headers[index].classList.add("margin-auto") });
       } else {
-        gsap.to(headers[index], { duration: 0.2, marginBottom: "" });
+        gsap.to(headers[index], { onComplete: () => headers[index].classList.remove("margin-auto") });
       }
     });
   });
