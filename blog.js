@@ -43,7 +43,6 @@ $(document).ready(function () {
   var queryElement = $('[data-item="search-query"]');
   var listElement = $('[fs-cmsfilter-element="list"]');
   var filtersState = 0;
-  // Global filters state object
 
   var config = {
     attributes: true,
@@ -58,13 +57,11 @@ $(document).ready(function () {
       if (mutation.type === "attributes") {
         if ($(mutation.target).is("label.is-active")) {
           filtersState += 1;
-          console.log(filtersState);
-          if (mutation.target !== clearElement.get(0)) {
+          if ($('[data-item="list-all"]').css("display") !== "grid" && mutation.target !== clearElement.get(0)) {
             clearElement.removeClass("is-active");
           }
         } else if (mutation.oldValue.includes("is-active")) {
           filtersState = Math.max(0, filtersState - 1);
-          // Make sure it doesn't go negative
         }
       }
     });
@@ -79,15 +76,15 @@ $(document).ready(function () {
       var searchValue = searchBar.val();
       queryElement.text(`${searchValue}`);
 
-      // Re-check after DOM changes
       adjustClearElementClass();
     }, 200);
   }
 
   function adjustClearElementClass() {
-    // Checks filtersState for any 'is-active' filter
     if (!Object.values(filtersState).includes(true)) {
-      clearElement.addClass("is-active");
+      if ($('[data-item="list-all"]').css("display") !== "grid") {
+        clearElement.addClass("is-active");
+      }
     } else {
       clearElement.removeClass("is-active");
     }
@@ -101,7 +98,9 @@ $(document).ready(function () {
     } else {
       $('[data-item="list-all"]').css("display", "none");
       $('[data-item="category"]').css("display", "grid");
-      clearElement.addClass("is-active");
+      if ($('[data-item="list-all"]').css("display") !== "grid") {
+        clearElement.addClass("is-active");
+      }
     }
     adjustClearElementClass();
     updateCountAndQuery();
@@ -110,20 +109,18 @@ $(document).ready(function () {
   searchBar.on("input", updateCountAndQuery);
 
   clearElement.click(function () {
-    // disconnect observer before initiating class changes
     observer.disconnect();
-
-    $(this).addClass("is-active");
     $('[data-item="list-all"]').css("display", "none");
     $('[data-item="category"]').css("display", "grid");
+    if ($('[data-item="list-all"]').css("display") !== "grid") {
+      $(this).addClass("is-active");
+    }
     updateCountAndQuery();
     adjustClearElementClass();
-
-    // Re-observe after operations are done
     observer.observe(targetNode, config);
   });
 
-  if (!checkboxes.is(":checked")) {
+  if (!checkboxes.is(":checked") && $('[data-item="list-all"]').css("display") !== "grid") {
     clearElement.addClass("is-active");
     $('[data-item="list-all"]').css("display", "none");
     $('[data-item="category"]').css("display", "grid");
