@@ -1,6 +1,6 @@
 $(document).ready(function () {
   var searchBar = $('[data-item="search-bar"]');
-  var el = $(".category_header .is-query");
+  var el = $(".category_header.is-query");
 
   // Checking input value on page load
   var initialSearchValue = searchBar.val().trim();
