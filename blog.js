@@ -16,7 +16,7 @@ $(document).ready(function () {
       var queryElement = $('[data-item="search-query"]');
       var searchValue = searchBar.val().trim();
 
-      queryElement.text(`"${searchValue}"`);
+      queryElement.text(`${searchValue}`);
 
       if (searchValue === "") {
         el.css("display", "none");
