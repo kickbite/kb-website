@@ -10,7 +10,7 @@ $(document).ready(function () {
       wPaginationWrapper.css("display", "none");
     } else {
       el.css("display", "flex");
-      wPaginationWrapper.css("display", "flex");
+      wPaginationWrapper.css("display", "grid");
     }
   }
 
