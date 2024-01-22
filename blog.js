@@ -106,7 +106,7 @@ function updateCountAndQuery() {
 //   updateCountAndQuery();
 // });
 
-// searchBar.on("input", updateCountAndQuery);
+searchBar.on("input", updateCountAndQuery);
 
 // clearElement.click(function () {
 //   observer.disconnect();
