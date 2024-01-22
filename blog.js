@@ -72,7 +72,7 @@
 
 function updateCountAndQuery() {
   setTimeout(function () {
-    // var resultsCount = listElement.children().length;
+    var queryElement = $('[data-item="search-query"]');
     var searchValue = searchBar.val();
     queryElement.text(`${searchValue}`);
 
