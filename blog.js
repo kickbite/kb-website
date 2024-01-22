@@ -39,7 +39,7 @@
 // $(document).ready(function () {
 //   var clearElement = $('[fs-cmsfilter-element="clear"]');
 //   var checkboxes = $('[data-item="fiters"] input[type="checkbox"]').not(clearElement.find("input"));
-//   var searchBar = $('[data-item="search-bar"]');
+//
 //   var queryElement = $('[data-item="search-query"]');
 //   var listElement = $('[fs-cmsfilter-element="list"]');
 //   var filtersState = 0;
@@ -69,6 +69,8 @@
 
 //   var targetNode = $('[data-item="fiters"]').get(0);
 //   observer.observe(targetNode, config);
+
+var searchBar = $('[data-item="search-bar"]');
 
 function updateCountAndQuery() {
   setTimeout(function () {
