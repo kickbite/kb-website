@@ -3,6 +3,8 @@ $(document).ready(function () {
   var el = $(".category_header.is-query");
   var fsCmsfilterElement = $('[fs-cmsfilter-element="empty"]');
   var wPaginationWrapper = $(".w-pagination-wrapper");
+  var filters = $('[data-item="filters"]');
+  var clearElement = $('[fs-cmsfilter-element="clear"]');
 
   function checkAndUpdateDisplay() {
     if (fsCmsfilterElement.css("display") === "flex") {
@@ -10,7 +12,7 @@ $(document).ready(function () {
       wPaginationWrapper.css("display", "none");
     } else {
       el.css("display", "flex");
-      wPaginationWrapper.css("display", "grid");
+      wPaginationWrapper.css("display", "flex");
     }
   }
 
@@ -43,4 +45,21 @@ $(document).ready(function () {
   }
 
   searchBar.on("input", updateCountAndQuery);
+
+  // Use MutationObserver to monitor for class changes on filter checkboxes
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.target.classList.contains("w--redirected-checked")) {
+        clearElement.removeClass("is-active");
+      }
+    });
+  }).observe(filters[0], {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  clearElement.on("click", function () {
+    $(this).addClass("is-active");
+  });
 });
