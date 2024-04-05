@@ -49,8 +49,8 @@ const createSlider = (sliderElement, start, map1, map2) => {
       "40%": 200,
       "60%": 400,
       "80%": 800,
-      "100%": 1800,
-      max: 1800,
+      "100%": 810,
+      max: 810,
     },
   });
 
