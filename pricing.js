@@ -1,37 +1,27 @@
 // Object mapping of slider values to corresponding monthly amounts
 const sliderMappingMonthly = {
-  30: 450,
-  60: 600,
   100: 750,
-  200: 1000,
-  400: 1500,
+  200: 1250,
+  400: 1650,
   800: 2000,
   810: "Get a quote",
 };
-
 // Object mapping of slider values to corresponding annual amounts
 const sliderMappingAnnually = {
-  30: 405,
-  60: 540,
   100: 675,
-  200: 900,
-  400: 1350,
+  200: 1125,
+  400: 1485,
   800: 1800,
   810: "Get a quote",
 };
-
 // Object mapping of cost value to corresponding savings
 const savingTable = {
-  405: 12095,
-  450: 12050,
-  540: 11960,
-  600: 11900,
   675: 11825,
   750: 11750,
-  900: 11600,
-  1000: 11500,
-  1350: 11150,
-  1500: 11000,
+  1125: 11375,
+  1250: 11250,
+  1485: 11015,
+  1650: 10850,
   1800: 10700,
   2000: 10500,
 };
@@ -50,19 +40,17 @@ const iconActive = `<svg width="32" height="33" viewBox="0 0 32 33" fill="none" 
 const createSlider = (sliderElement, start, map1, map2) => {
   noUiSlider.create(sliderElement, {
     start: [start],
-    padding: [30, 0],
+    padding: [100, 0],
     snap: true,
     connect: [true, false],
     range: {
-      min: 30,
-      "16%": 30,
-      "32%": 60,
-      "48%": 100,
-      "64%": 200,
-      "80%": 400,
-      "95%": 800,
-      "100%": 810,
-      max: 810,
+      min: 100,
+      "20%": 100,
+      "40%": 200,
+      "60%": 400,
+      "80%": 800,
+      "100%": 1800,
+      max: 1800,
     },
   });
 
