@@ -103,7 +103,6 @@ const createSlider = (sliderElement,start,map1,map2)=>{
               let monthValue = $("#calculated-slider-monthly").text();
               $("[data-item='picked']").each(function() {
                   $(this).text(monthValue);
-                  console.log($(this))
               });
               let sessionCostMonthly = Number(monthValue) / sliderValue;
               $(".cost-session").each(function() {
