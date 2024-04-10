@@ -27,95 +27,108 @@ const savingTable = {
 };
 
 let initialDisplays = [];
-window.addEventListener("load", (event) => {
+window.addEventListener("load", (event)=>{
   const elems = document.querySelectorAll("[data-slider='hide']");
-  elems.forEach((elem) => initialDisplays.push(getComputedStyle(elem).display));
-});
+  elems.forEach((elem)=>initialDisplays.push(getComputedStyle(elem).display));
+}
+);
 
 // HTML for inactive and active icons
 const iconInactive = `<svg id="inactive" width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="1" width="31" height="31" rx="15.5" stroke="black"></rect></svg>`;
 const iconActive = `<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg"><rect y="0.5" width="32" height="32" rx="16" fill="#FB8F37"></rect><path d="M11 16.25L14.5 19.75L21 13.25" stroke="white" stroke-width="1.5"></path></svg>`;
 
 // Function to create and update NoUiSlider, handles and sets slider values in appropriate areas
-const createSlider = (sliderElement, start, map1, map2) => {
+const createSlider = (sliderElement,start,map1,map2)=>{
   noUiSlider.create(sliderElement, {
-    start: [start],
-    padding: [100, 0],
-    snap: true,
-    connect: [true, false],
-    range: {
-      min: 100,
-      "20%": 100,
-      "40%": 200,
-      "60%": 400,
-      "80%": 800,
-      "100%": 810,
-      max: 810,
-    },
+      start: [start],
+      padding: [100, 0],
+      snap: true,
+      connect: [true, false],
+      range: {
+          min: 100,
+          "20%": 100,
+          "40%": 200,
+          "60%": 400,
+          "80%": 800,
+          "100%": 810,
+          max: 810,
+      },
   });
 
-  sliderElement.noUiSlider.on("update", function (values, handle) {
-    let tabs = $("[data-box='slider-tab']");
-    let activeTabIndex = tabs.index(tabs.filter(".is-active"));
-    let sliderValue = Math.round(values[handle]);
-
-    calculateAndDisplaySavings(activeTabIndex, sliderValue);
-
-    const elems = document.querySelectorAll("[data-slider='hide']");
-    if (sliderValue === 810) {
-      elems.forEach((elem) => (elem.style.display = "none"));
-    } else {
-      elems.forEach((elem, index) => (elem.style.display = initialDisplays[index]));
-    }
-
-    let value = Math.round(values[handle]);
-    $(`#${sliderElement.id}-val`).text(value);
-
-    if (map1.hasOwnProperty(value.toString()) && map2.hasOwnProperty(value.toString())) {
-      let calculatedValue1 = map1[value.toString()];
-      let calculatedValue2 = map2[value.toString()];
-      $(`#calculated-${sliderElement.id}-monthly`).text(calculatedValue1);
-      $(`#calculated-${sliderElement.id}-annually`).text(calculatedValue2);
-
-      let costValueMonthly = calculatedValue1 / (value * 1000);
-      let costValueAnnually = calculatedValue2 / (value * 1000);
-
-      $(`#cost-${sliderElement.id}-monthly`).text(isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(3));
-      $(`#cost-${sliderElement.id}-annually`).text(isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(3));
-
+  sliderElement.noUiSlider.on("update", function(values, handle) {
       let tabs = $("[data-box='slider-tab']");
       let activeTabIndex = tabs.index(tabs.filter(".is-active"));
-      let sliderValue = Number($(`#${sliderElement.id}-val`).text()) * 1000;
+      let sliderValue = Math.round(values[handle]);
 
-      let calculatedValue1Numeric = isNaN(calculatedValue1) ? null : Number(calculatedValue1);
-      let calculatedValue2Numeric = isNaN(calculatedValue2) ? null : Number(calculatedValue2);
+      calculateAndDisplaySavings(activeTabIndex, sliderValue);
 
-      let savingsValue;
-      if (savingTable.hasOwnProperty(calculatedValue1Numeric)) {
-        savingsValue = savingTable[calculatedValue1Numeric];
-      } else if (savingTable.hasOwnProperty(calculatedValue2Numeric)) {
-        savingsValue = savingTable[calculatedValue2Numeric];
+      const elems = document.querySelectorAll("[data-slider='hide']");
+      if (sliderValue === 810) {
+          elems.forEach((elem)=>(elem.style.display = "none"));
+      } else {
+          elems.forEach((elem,index)=>(elem.style.display = initialDisplays[index]));
       }
 
-      if (activeTabIndex === 0) {
-        // Monthly tab
-        let monthValue = $("#calculated-slider-monthly").text();
-        $("#picked").text(monthValue);
+      let value = Math.round(values[handle]);
+      $(`#${sliderElement.id}-val`).text(value);
 
-        let sessionCostMonthly = Number(monthValue) / sliderValue;
-        $("#cost-session").text(isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(3));
-      } else if (activeTabIndex === 1) {
-        // Annually tab
-        let yearValue = $("#calculated-slider-annually").text();
-        $("#picked").text(yearValue);
-        let sessionCostAnnually = Number(yearValue) / sliderValue;
-        $("#cost-session").text(isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(3));
+      if (map1.hasOwnProperty(value.toString()) && map2.hasOwnProperty(value.toString())) {
+          let calculatedValue1 = map1[value.toString()];
+          let calculatedValue2 = map2[value.toString()];
+          $(`#calculated-${sliderElement.id}-monthly`).text(calculatedValue1);
+          $(`#calculated-${sliderElement.id}-annually`).text(calculatedValue2);
+
+          let costValueMonthly = calculatedValue1 / (value * 1000);
+          let costValueAnnually = calculatedValue2 / (value * 1000);
+
+          $(`#cost-${sliderElement.id}-monthly`).text(isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(3));
+          $(`#cost-${sliderElement.id}-annually`).text(isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(3));
+
+          let tabs = $("[data-box='slider-tab']");
+          let activeTabIndex = tabs.index(tabs.filter(".is-active"));
+          let sliderValue = Number($(`#${sliderElement.id}-val`).text()) * 1000;
+
+          let calculatedValue1Numeric = isNaN(calculatedValue1) ? null : Number(calculatedValue1);
+          let calculatedValue2Numeric = isNaN(calculatedValue2) ? null : Number(calculatedValue2);
+
+          let savingsValue;
+          if (savingTable.hasOwnProperty(calculatedValue1Numeric)) {
+              savingsValue = savingTable[calculatedValue1Numeric];
+          } else if (savingTable.hasOwnProperty(calculatedValue2Numeric)) {
+              savingsValue = savingTable[calculatedValue2Numeric];
+          }
+
+          if (activeTabIndex === 0) {
+              // Monthly tab
+              let monthValue = $("#calculated-slider-monthly").text();
+              $("[data-item='picked']").each(function() {
+                  $(this).text(monthValue);
+                  console.log($(this))
+              });
+              let sessionCostMonthly = Number(monthValue) / sliderValue;
+              $(".cost-session").each(function() {
+                  $(this).text(isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(3));
+              });
+
+          } else if (activeTabIndex === 1) {
+              // Annually tab
+              let yearValue = $("#calculated-slider-annually").text();
+              $("[data-item='picked']").each(function() {
+                  $(this).text(yearValue);
+
+              });
+              let sessionCostAnnually = Number(yearValue) / sliderValue;
+              $(".cost-session").each(function() {
+                  $(this).text(isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(3));
+              });
+
+          }
       }
-    }
-    let displayValue = value === 810 ? "upto 50Mio" : value;
-    $(`#${sliderElement.id}-val`).text(displayValue);
+      let displayValue = value === 810 ? "upto 50Mio" : value;
+      $(`#${sliderElement.id}-val`).text(displayValue);
   });
-};
+}
+;
 
 // Initialization of NoUiSlider
 const slider = document.getElementById("slider");
@@ -124,31 +137,27 @@ createSlider(slider, 60, sliderMappingMonthly, sliderMappingAnnually);
 // Event handler for window resize which wraps NoUiSlider handle in anchor tag for larger screens and removes for smaller screens
 let handleElements = $('[data-handle="0"]');
 let anchorElements = $("[data-anchor]");
-$(window)
-  .resize(function () {
-    handleElements.each(function (index) {
+$(window).resize(function() {
+  handleElements.each(function(index) {
       if (window.innerWidth > 767) {
-        if (anchorElements[index]) {
-          $(this).append(anchorElements[index]);
-        }
+          if (anchorElements[index]) {
+              $(this).append(anchorElements[index]);
+          }
       } else {
-        var dataAnchor = $(this).children("[data-anchor]");
-        if (dataAnchor.length) {
-          $("#slider").append(dataAnchor);
-        }
+          var dataAnchor = $(this).children("[data-anchor]");
+          if (dataAnchor.length) {
+              $("#slider").append(dataAnchor);
+          }
       }
-    });
-  })
-  .trigger("resize");
+  });
+}).trigger("resize");
 
 // Event handler for tab clicks to change active state and update associated slider values and savings
-$("[data-box='slider-tab']").on("click", function () {
-  $("[data-box='slider-tab']")
-    .removeClass("is-active")
-    .each(function () {
+$("[data-box='slider-tab']").on("click", function() {
+  $("[data-box='slider-tab']").removeClass("is-active").each(function() {
       const indicator = $(this).find("[data-role='indicator']")[0];
       indicator.innerHTML = iconInactive;
-    });
+  });
 
   $(this).addClass("is-active");
   const indicator = $(this).find("[data-role='indicator']")[0];
@@ -165,7 +174,7 @@ function updateSliderValues() {
 }
 
 // Listens for changes in NoUiSlider, updates slider value
-slider.noUiSlider.on("change", function () {
+slider.noUiSlider.on("change", function() {
   updateSliderValues();
 });
 
@@ -179,25 +188,30 @@ function calculateAndDisplaySavings(activeTabIndex, sliderValue) {
   let map = activeTabIndex === 0 ? sliderMappingMonthly : sliderMappingAnnually;
   let calculatedValue = map.hasOwnProperty(sliderValue.toString()) ? map[sliderValue.toString()] : null;
   if (!isNaN(calculatedValue)) {
-    let savingsValue = savingTable[calculatedValue];
-    $("[data-slider='value']").text("Start 14-Day Trial");
+      let savingsValue = savingTable[calculatedValue];
+      $("[data-slider='value']").text("Start 14-Day Trial");
 
-    $("[data-link='slider']").attr("href", "/get-a-demo"); // set default link if not set already
-    $("[data-link='slider']").removeAttr("data-modifier"); // remove the data-modifier attribute
+      $("[data-link='slider']").attr("href", "/get-a-demo");
+      // set default link if not set already
+      $("[data-link='slider']").removeAttr("data-modifier");
+      // remove the data-modifier attribute
 
-    let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
-    $("#savings").text(formattedSavingsValue);
+      let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
+      $("#savings").text(formattedSavingsValue);
   } else if (calculatedValue === "Get a quote") {
-    let savingsValue = Object.values(savingTable).pop();
+      let savingsValue = Object.values(savingTable).pop();
 
-    $("[data-slider='value']").text("Get a quote"); // get the last value from the object
+      $("[data-slider='value']").text("Get a quote");
+      // get the last value from the object
 
-    $("[data-link='slider']").attr("href", "/get-a-demo"); // set href to "/get-a-demo"
-    $("[data-link='slider']").attr("data-modifier", "true"); // set data-modifier to true
+      $("[data-link='slider']").attr("href", "/get-a-demo");
+      // set href to "/get-a-demo"
+      $("[data-link='slider']").attr("data-modifier", "true");
+      // set data-modifier to true
 
-    let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
-    $("#savings").text(formattedSavingsValue);
-    toggleContentVisibilityBasedOnClick();
+      let formattedSavingsValue = savingsValue ? formatNumberWithDots(savingsValue) : "-";
+      $("#savings").text(formattedSavingsValue);
+      toggleContentVisibilityBasedOnClick();
   }
 }
 
