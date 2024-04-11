@@ -52,11 +52,14 @@ $(document).ready(function () {
       // If the page is hidden, clear the interval
       clearInterval(cycleInterval);
     } else {
-      // If the page is visible, start the interval
+      // If the page is visible, clear previous interval (if any) and start a new one
+      clearInterval(cycleInterval);
       cycleInterval = setInterval(cycleItems, cycleTimeInterval);
     }
   });
 });
+
+
 
 // transferred to Webflow 14/09 15:00
 // linked to netlify at 19/10
