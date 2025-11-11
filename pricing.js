@@ -81,8 +81,8 @@ const createSlider = (sliderElement,start,map1,map2)=>{
           let costValueMonthly = calculatedValue1 / (value * 1000);
           let costValueAnnually = calculatedValue2 / (value * 1000);
 
-          $(`#cost-${sliderElement.id}-monthly`).text(isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(3));
-          $(`#cost-${sliderElement.id}-annually`).text(isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(3));
+          $(`#cost-${sliderElement.id}-monthly`).text(isNaN(costValueMonthly) ? "-" : costValueMonthly.toFixed(4));
+          $(`#cost-${sliderElement.id}-annually`).text(isNaN(costValueAnnually) ? "-" : costValueAnnually.toFixed(4));
 
           let tabs = $("[data-box='slider-tab']");
           let activeTabIndex = tabs.index(tabs.filter(".is-active"));
@@ -105,9 +105,11 @@ const createSlider = (sliderElement,start,map1,map2)=>{
                   $(this).text(monthValue);
               });
               let sessionCostMonthly = Number(monthValue) / sliderValue;
+              const formattedMonthlySessionCost = isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(4);
               $(".cost-session").each(function() {
-                  $(this).text(isNaN(sessionCostMonthly) ? "-" : sessionCostMonthly.toFixed(3));
+                  $(this).text(formattedMonthlySessionCost);
               });
+              $("#cost-session").text(formattedMonthlySessionCost);
 
           } else if (activeTabIndex === 1) {
               // Annually tab
@@ -117,9 +119,11 @@ const createSlider = (sliderElement,start,map1,map2)=>{
 
               });
               let sessionCostAnnually = Number(yearValue) / sliderValue;
+              const formattedAnnualSessionCost = isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(4);
               $(".cost-session").each(function() {
-                  $(this).text(isNaN(sessionCostAnnually) ? "-" : sessionCostAnnually.toFixed(3));
+                  $(this).text(formattedAnnualSessionCost);
               });
+              $("#cost-session").text(formattedAnnualSessionCost);
 
           }
       }
